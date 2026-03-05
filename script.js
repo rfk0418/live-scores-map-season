@@ -1,5 +1,7 @@
 const API_KEY = "bf7b52a8-b4de-40bf-bf89-0b4fc699306c";
 
+let loadingGames = false;
+
 //Map setup
 const map = L.map("map").setView([39.5, -98.35], 4);
 const initialView = { center: [39.5, -98.35], zoom: 4 };
