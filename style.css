@@ -1,30 +1,26 @@
-body {
-  margin:0;
-  font-family: Arial;
-  text-align:center;
-}
-
+/* Map sizing */
 #map {
-  height: 90vh;
-  width: 100%;
+  height: 600px;
+  width: 90%;
+  margin: 0 auto;
+  border: 2px solid #333;
 }
 
+/* Timeline controls floating above map */
 #timeline-controls {
   position: absolute;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;        /* ensure it’s above Leaflet tiles */
+  z-index: 1000;
   background: rgba(0,0,0,0.6);
   padding: 5px 10px;
   border-radius: 6px;
   color: white;
+  text-align: center;
 }
 
-.leaflet-marker-icon {
-  border-radius: 50%;
-  border: 2px solid white;
-  
+/* Leaflet popup dark theme */
 .leaflet-popup-content-wrapper {
   background-color: #1f2937;
   color: white;
@@ -42,4 +38,15 @@ body {
   font-size: 14px;
 }
 
+/* Player icons circular */
+.leaflet-marker-icon {
+  border-radius: 50%;
+  border: 2px solid white;
+}
 
+/* Optional button styling inside controls */
+#timeline-controls button, #timeline-controls input {
+  margin: 0 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+}
