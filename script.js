@@ -25,7 +25,7 @@ const starPlayers = {
 function playerIcon(image) {
   return L.icon({
     iconUrl: `players/${image}`,
-    iconSize: [150,150],
+    iconSize: [90,90],
     iconAnchor: [25,25],
     popupAnchor: [0,-25]
   });
