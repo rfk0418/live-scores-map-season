@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function updateGames() {
   const isoDate = currentDate.toISOString().split("T")[0];
 
-  const response = await fetch(`https://www.balldontlie.io/api/v1/games?dates[]=${isoDate}&per_page=100`);
+  const response = await fetch(`https://balldontlie.io/api/v1/games?dates[]=${isoDate}&per_page=100`);
   const data = await response.json();
 
   displayGames(data.data);
