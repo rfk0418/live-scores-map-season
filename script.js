@@ -93,21 +93,32 @@ document.addEventListener("DOMContentLoaded", () => {
 //Fetch games for selected day
 async function updateGames() {
 
+  if (loadingGames) return;   // prevents stacking requests
+  loadingGames = true;
+
   const isoDate = currentDate.toISOString().split("T")[0];
 
-  const response = await fetch(
-    `https://api.balldontlie.io/v1/games?dates[]=${isoDate}`,
-    {
-      headers: { Authorization: API_KEY }
-    }
-  );
+  try {
 
-  const data = await response.json();
+    const response = await fetch(
+      `https://api.balldontlie.io/v1/games?dates[]=${isoDate}`,
+      {
+        headers: { Authorization: API_KEY }
+      }
+    );
 
-  displayGames(data.data);
+    const data = await response.json();
 
-  const dateInput = document.getElementById("gameDate");
-  if(dateInput) dateInput.value = isoDate;
+    displayGames(data.data);
+
+    const dateInput = document.getElementById("gameDate");
+    if(dateInput) dateInput.value = isoDate;
+
+  } catch(err) {
+    console.error("Error loading games:", err);
+  }
+
+  loadingGames = false;
 }
 //Display games
 function displayGames(games) {
