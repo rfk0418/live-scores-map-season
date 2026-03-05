@@ -58,45 +58,49 @@ resetControl.addTo(map);
 
 // 6️⃣ Timeline navigation
 let currentDate = new Date(); // start today
-const dateInput = document.getElementById("gameDate"); // optional input field
 
-function formatDate(date) {
-  return date.toISOString().split("T")[0]; // YYYY-MM-DD
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const dateInput = document.getElementById("gameDate");
 
-// Next/Previous buttons
-document.getElementById("prevDay").addEventListener("click", () => {
-  currentDate.setDate(currentDate.getDate() - 1);
-  updateGames();
-});
+  // Initialize date input
+  if(dateInput) dateInput.value = currentDate.toISOString().split("T")[0];
 
-document.getElementById("nextDay").addEventListener("click", () => {
-  currentDate.setDate(currentDate.getDate() + 1);
-  updateGames();
-});
+  // Date picker change
+  if(dateInput) {
+    dateInput.addEventListener("change", e => {
+      currentDate = new Date(e.target.value);
+      updateGames();
+    });
+  }
 
-// Optional: update via date picker
-if(dateInput) {
-  dateInput.value = formatDate(currentDate);
-  dateInput.addEventListener("change", e => {
-    currentDate = new Date(e.target.value);
+  document.getElementById("prevDay").addEventListener("click", () => {
+    currentDate.setDate(currentDate.getDate() - 1);
     updateGames();
   });
-}
+
+  document.getElementById("nextDay").addEventListener("click", () => {
+    currentDate.setDate(currentDate.getDate() + 1);
+    updateGames();
+  });
+
+  // Load initial games
+  updateGames();
+});
 
 // 7️⃣ Fetch games for selected day
 async function updateGames() {
-  const isoDate = formatDate(currentDate);
+  const isoDate = currentDate.toISOString().split("T")[0];
 
   const response = await fetch(`https://www.balldontlie.io/api/v1/games?dates[]=${isoDate}&per_page=100`);
   const data = await response.json();
 
   displayGames(data.data);
 
+  const dateInput = document.getElementById("gameDate");
   if(dateInput) dateInput.value = isoDate;
 }
 
-// 8️⃣ Display games with arena + player markers
+// 8️⃣ Display games
 function displayGames(games) {
 
   // Clear previous markers
@@ -169,6 +173,3 @@ map.on("zoomend", () => {
     map.addLayer(playerLayer);
   }
 });
-
-// 11️⃣ Load today's games on start
-updateGames();
