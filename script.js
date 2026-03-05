@@ -112,7 +112,9 @@ function displayGames(games) {
   // Clear previous markers
   playerLayer.clearLayers();
   map.eachLayer(layer => {
-    if(layer instanceof L.CircleMarker) layer.remove();
+    if (!(layer instanceof L.TileLayer)) {
+    map.removeLayer(layer);
+  }
   });
 
   games.forEach(game => {
