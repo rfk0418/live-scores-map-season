@@ -9,6 +9,18 @@ body {
   width: 100%;
 }
 
+#timeline-controls {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;        /* ensure it’s above Leaflet tiles */
+  background: rgba(0,0,0,0.6);
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+}
+
 .leaflet-marker-icon {
   border-radius: 50%;
   border: 2px solid white;
@@ -29,3 +41,5 @@ body {
   font-family: Arial, sans-serif;
   font-size: 14px;
 }
+
+
