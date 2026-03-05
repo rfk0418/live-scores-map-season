@@ -1,0 +1,31 @@
+body {
+  margin:0;
+  font-family: Arial;
+  text-align:center;
+}
+
+#map {
+  height: 90vh;
+  width: 100%;
+}
+
+.leaflet-marker-icon {
+  border-radius: 50%;
+  border: 2px solid white;
+  
+.leaflet-popup-content-wrapper {
+  background-color: #1f2937;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.leaflet-popup-tip {
+  background-color: #1f2937;
+}
+
+.game-popup {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
