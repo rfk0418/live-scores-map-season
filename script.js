@@ -1,6 +1,6 @@
 const API_KEY = "bf7b52a8-b4de-40bf-bf89-0b4fc699306c";
 
-// 1️⃣ Map setup
+//Map setup
 const map = L.map("map").setView([39.5, -98.35], 4);
 const initialView = { center: [39.5, -98.35], zoom: 4 };
 
@@ -13,13 +13,13 @@ L.tileLayer(
   }
 ).addTo(map);
 
-// 2️⃣ Star player images
+//Star player images
 const starPlayers = {
   "Los Angeles Lakers": "lebron.png",
   "Denver Nuggets": "jokic.png"
 };
 
-// 3️⃣ Player icon generator
+//Player icon generator
 function playerIcon(image) {
   return L.icon({
     iconUrl: `players/${image}`,
@@ -29,11 +29,11 @@ function playerIcon(image) {
   });
 }
 
-// 4️⃣ Layer for player markers
+//Layer for player markers
 const PLAYER_ZOOM_THRESHOLD = 8;
 const playerLayer = L.layerGroup().addTo(map);
 
-// 5️⃣ Reset button
+//Reset button
 const resetControl = L.control({position: 'topright'});
 resetControl.onAdd = function(map) {
   const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
@@ -56,7 +56,7 @@ resetControl.onAdd = function(map) {
 };
 resetControl.addTo(map);
 
-// 6️⃣ Timeline navigation
+//Timeline navigation
 let currentDate = new Date(); // start today
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateGames();
 });
 
-// 7️⃣ Fetch games for selected day
+//Fetch games for selected day
 async function updateGames() {
   const isoDate = currentDate.toISOString().split("T")[0];
 
@@ -100,7 +100,7 @@ async function updateGames() {
   if(dateInput) dateInput.value = isoDate;
 }
 
-// 8️⃣ Display games
+//Display games
 function displayGames(games) {
 
   // Clear previous markers
@@ -145,7 +145,7 @@ function displayGames(games) {
   });
 }
 
-// 9️⃣ Show player markers
+//Show player markers
 function showPlayersForGame(game, location, offset, popup) {
   playerLayer.clearLayers();
 
@@ -165,7 +165,7 @@ function showPlayersForGame(game, location, offset, popup) {
   }
 }
 
-// 10️⃣ Auto-hide player markers when zoomed out
+//Auto-hide player markers when zoomed out
 map.on("zoomend", () => {
   if(map.getZoom() < PLAYER_ZOOM_THRESHOLD) {
     map.removeLayer(playerLayer);
