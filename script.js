@@ -32,6 +32,7 @@ function playerIcon(image) {
 //Layer for player markers
 const PLAYER_ZOOM_THRESHOLD = 8;
 const playerLayer = L.layerGroup().addTo(map);
+const arenaLayer = L.layerGroup().addTo(map);
 
 //Reset button
 const resetControl = L.control({position: 'topright'});
@@ -110,12 +111,8 @@ async function updateGames() {
 function displayGames(games) {
 
   // Clear previous markers
+  arenaLayer.clearLayers();
   playerLayer.clearLayers();
-  map.eachLayer(layer => {
-    if (!(layer instanceof L.TileLayer)) {
-    map.removeLayer(layer);
-  }
-  });
 
   games.forEach(game => {
 
@@ -143,7 +140,7 @@ function displayGames(games) {
       color: "purple",
       fillColor: "#ffffff",
       fillOpacity: 1
-    }).addTo(map).bindPopup(popup);
+    }).addTo(arenaLayer).bindPopup(popup);
 
     // Zoom to arena & show players
     arenaMarker.on("click", () => {
