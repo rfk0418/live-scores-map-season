@@ -89,9 +89,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Fetch games for selected day
 async function updateGames() {
+
   const isoDate = currentDate.toISOString().split("T")[0];
 
-  const response = await fetch(`https://api.balldontlie.io/api/v1/games?dates[]=${isoDate}&per_page=100`);
+  const response = await fetch(
+    `https://api.balldontlie.io/v1/games?dates[]=${isoDate}`,
+    {
+      headers: { Authorization: API_KEY }
+    }
+  );
+
   const data = await response.json();
 
   displayGames(data.data);
@@ -99,7 +106,6 @@ async function updateGames() {
   const dateInput = document.getElementById("gameDate");
   if(dateInput) dateInput.value = isoDate;
 }
-
 //Display games
 function displayGames(games) {
 
