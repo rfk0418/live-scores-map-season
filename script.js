@@ -1,6 +1,7 @@
 const API_KEY = "bf7b52a8-b4de-40bf-bf89-0b4fc699306c";
 
 let controller = null;
+const gameCache = {};
 
 //Map setup
 const map = L.map("map").setView([39.5, -98.35], 4);
@@ -93,37 +94,49 @@ document.addEventListener("DOMContentLoaded", () => {
 //Fetch games for selected day
 async function updateGames() {
 
+  if (loadingGames) return;
+  loadingGames = true;
+
   const isoDate = currentDate.toISOString().split("T")[0];
 
-  // cancel previous request
-  if (controller) {
-    controller.abort();
-  }
+  // ✅ CHECK CACHE FIRST
+  if (gameCache[isoDate]) {
 
-  controller = new AbortController();
+    console.log("Loaded from cache");
+
+    displayGames(gameCache[isoDate]);
+
+    const dateInput = document.getElementById("gameDate");
+    if(dateInput) dateInput.value = isoDate;
+
+    loadingGames = false;
+    return;
+  }
 
   try {
 
     const response = await fetch(
       `https://api.balldontlie.io/v1/games?dates[]=${isoDate}`,
       {
-        headers: { Authorization: API_KEY },
-        signal: controller.signal
+        headers: { Authorization: API_KEY }
       }
     );
 
     const data = await response.json();
 
+    // ✅ SAVE TO CACHE
+    gameCache[isoDate] = data.data;
+
     displayGames(data.data);
 
     const dateInput = document.getElementById("gameDate");
-    if (dateInput) dateInput.value = isoDate;
+    if(dateInput) dateInput.value = isoDate;
 
   } catch(err) {
-    if (err.name !== "AbortError") {
-      console.error(err);
-    }
+    console.error("Error loading games:", err);
   }
+
+  loadingGames = false;
 }
 //Display games
 function displayGames(games) {
