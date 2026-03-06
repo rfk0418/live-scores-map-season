@@ -77,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("prevDay").addEventListener("click", () => {
-    currentDate.setDate(currentDate.getDate() - 1);
-    updateGames();
-  });
+  currentDate = new Date(currentDate.getTime() - 86400000);
+  updateGames();
+});
 
   document.getElementById("nextDay").addEventListener("click", () => {
-    currentDate.setDate(currentDate.getDate() + 1);
-    updateGames();
-  });
+  currentDate = new Date(currentDate.getTime() + 86400000);
+  updateGames();
+});
 
   // Load initial games
   updateGames();
